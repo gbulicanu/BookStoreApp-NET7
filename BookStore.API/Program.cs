@@ -1,7 +1,6 @@
 using BookStore.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using BookStore.API.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
