@@ -1,6 +1,7 @@
-﻿using BookStore.API.Data;
+using BookStore.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using BookStore.API.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Host.UseSerilog(
-    (context, loggging) => loggging.WriteTo
+    (context, logging) => logging.WriteTo
         .Console()
         .ReadFrom
         .Configuration(context.Configuration));

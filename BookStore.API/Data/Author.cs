@@ -1,6 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-
 namespace BookStore.API.Data;
 
 public partial class Author
