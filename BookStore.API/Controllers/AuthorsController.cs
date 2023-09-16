@@ -72,7 +72,7 @@ public class AuthorsController : ControllerBase
     }
 
     // PUT: api/Authors/5
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    // To protect from over posting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
     public async Task<IActionResult> PutAuthor(int id, AuthorUpdateDto authorDto)
     {
@@ -122,7 +122,7 @@ public class AuthorsController : ControllerBase
     }
 
     // POST: api/Authors
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    // To protect from over posting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
     public async Task<ActionResult<AuthorCreateDto>> PostAuthor(AuthorCreateDto authorDto)
     {
@@ -169,7 +169,7 @@ public class AuthorsController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error performing: DELETE {Mathod}", nameof(DeleteAuthor));
+            _logger.LogError(ex, "Error performing: DELETE {Method}", nameof(DeleteAuthor));
             return StatusCode((int)HttpStatusCode.InternalServerError, Messages.Error500Client);
         }
     }

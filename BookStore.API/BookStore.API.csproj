@@ -24,12 +24,14 @@
 
   <ItemGroup>
     <None Remove="Models\" />
-    <None Remove="Models\Authors\" />
     <None Remove="Configurations\" />
+    <None Remove="Models\Authors\" />
+    <None Remove="Models\Books\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="Models\Authors\" />
     <Folder Include="Configurations\" />
+    <Folder Include="Models\Authors\" />
+    <Folder Include="Models\Books\" />
   </ItemGroup>
 </Project>
