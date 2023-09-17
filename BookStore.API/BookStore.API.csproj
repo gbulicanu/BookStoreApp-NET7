@@ -4,6 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>8ae61c60-57ce-4c6f-a4d9-f1d856b7d01f</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
@@ -20,6 +21,8 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.11" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.11" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,11 +30,13 @@
     <None Remove="Configurations\" />
     <None Remove="Models\Authors\" />
     <None Remove="Models\Books\" />
+    <None Remove="Models\Users\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="Configurations\" />
     <Folder Include="Models\Authors\" />
     <Folder Include="Models\Books\" />
+    <Folder Include="Models\Users\" />
   </ItemGroup>
 </Project>
