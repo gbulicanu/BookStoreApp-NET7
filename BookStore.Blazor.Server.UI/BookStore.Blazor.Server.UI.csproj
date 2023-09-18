@@ -20,7 +20,6 @@
     <None Remove="Providers\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Pages\Users\" />
     <Folder Include="Data\" />
     <Folder Include="Providers\" />
   </ItemGroup>

@@ -3,4 +3,5 @@
 public interface IAuthClient
 {
     Task<bool> AuthenticateAsync(LoginUserDto loginModel);
+    Task LogoutAsync();
 }

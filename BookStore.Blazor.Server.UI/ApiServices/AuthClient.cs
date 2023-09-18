@@ -32,5 +32,10 @@ public class AuthClient : IAuthClient
 
         return true;
     }
+
+    public async Task LogoutAsync()
+    {
+        await ((ApiAuthSateProvider)_authStateProvider).LoggedOut();
+    }
 }
 

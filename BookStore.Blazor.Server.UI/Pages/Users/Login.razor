@@ -1,7 +1,7 @@
 ﻿@page "/users/login"
 
-@inject IAuthClient authClient
-@inject NavigationManager navManager
+@inject IAuthClient auth
+@inject NavigationManager navigation
 
 <h3>Login</h3>
 
@@ -40,7 +40,7 @@
     {
         try
         {
-            var result = await authClient.AuthenticateAsync(LoginModel);
+            var result = await auth.AuthenticateAsync(LoginModel);
             if (result)
             {
                 NavigateToHome();
@@ -56,7 +56,7 @@
     }
     private void NavigateToHome()
     {
-        navManager.NavigateTo("/");
+        navigation.NavigateTo("/");
     }
     }
 

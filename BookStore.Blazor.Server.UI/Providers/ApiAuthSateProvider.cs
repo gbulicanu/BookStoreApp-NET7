@@ -46,8 +46,9 @@ public class ApiAuthSateProvider : AuthenticationStateProvider
         NotifyAuthenticationStateChanged(authState);
     }
 
-    public void LoggedOut()
+    public async Task LoggedOut()
     {
+        await _localStorage.RemoveItemAsync("accessToken");
         var nobody = new ClaimsPrincipal(new ClaimsIdentity());
         var authState = Task.FromResult(new AuthenticationState(nobody));
         NotifyAuthenticationStateChanged(authState);
