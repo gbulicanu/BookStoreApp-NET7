@@ -27,7 +27,7 @@ public class ApiAuthSateProvider : AuthenticationStateProvider
 
         var tokenContent = _tokenHandler.ReadJwtToken(savedToken);
 
-        if (tokenContent.ValidTo < DateTime.Now)
+        if (tokenContent.ValidTo.ToLocalTime() < DateTime.Now)
         {
             return new AuthenticationState(user);
         }
