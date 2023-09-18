@@ -1,0 +1,62 @@
+﻿@page "/users/login"
+
+@inject IAuthClient authClient
+@inject NavigationManager navManager
+
+<h3>Login</h3>
+
+@if (!string.IsNullOrEmpty(message))
+    {
+        <div class="alert alert-danger">
+            <p>@message</p>
+        </div>
+    }
+
+<div class="card-body">
+    <EditForm Model="LoginModel" OnValidSubmit="HandleLogin">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <InputText class="form-control" @bind-Value="LoginModel.Email" />
+            <ValidationMessage For="@(() => LoginModel.Email)" />
+        </div>
+        <br />
+        <div class="form-group">
+            <label for="email">Password</label>
+            <InputText class="form-control" type="password" @bind-Value="LoginModel.Password" />
+            <ValidationMessage For="@(() => LoginModel.Password)" />
+        </div>
+
+        <br />  
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
+    </EditForm>
+</div>
+
+@code {
+    string message = string.Empty;
+    LoginUserDto LoginModel = new LoginUserDto();
+    private async Task HandleLogin()
+    {
+        try
+        {
+            var result = await authClient.AuthenticateAsync(LoginModel);
+            if (result)
+            {
+                NavigateToHome();
+            }
+        }   
+        catch (ApiException apiException)
+        {
+            if (apiException.StatusCode >= 200 && apiException.StatusCode <= 299)
+                NavigateToHome();
+
+            message = apiException.Response;
+        }
+    }
+    private void NavigateToHome()
+    {
+        navManager.NavigateTo("/");
+    }
+    }
+

@@ -74,6 +74,7 @@ public class AuthController : ControllerBase
 
     [HttpPost]
     [Route("login")]
+    [ProducesResponseType(typeof(AuthResponse), 202)]
     public async Task<ActionResult<AuthResponse>> Login(LoginUserDto userDto)
     {
         _logger.LogInformation("Login attempt for {User}", userDto.Email);

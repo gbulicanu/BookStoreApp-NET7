@@ -1,6 +1,6 @@
 ﻿@inherits LayoutComponentBase
 
-<PageTitle>BookStore.Blazor.Server.UI</PageTitle>
+<PageTitle>BookStore</PageTitle>
 
 <div class="page">
     <div class="sidebar">
@@ -9,6 +9,14 @@
 
     <main>
         <div class="top-row px-4">
+            <AuthorizeView>
+                <NotAuthorized>
+                    <a href="/users/login">Login</a>
+                </NotAuthorized>
+                <Authorized>
+                    <a href="/users/logout">Login</a>
+                </Authorized>
+            </AuthorizeView>
             <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
         </div>
 

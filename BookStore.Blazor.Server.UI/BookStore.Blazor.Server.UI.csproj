@@ -11,13 +11,17 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Blazored.LocalStorage" Version="4.4.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.0.0" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Pages\Users\" />
     <None Remove="Data\" />
+    <None Remove="Providers\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pages\Users\" />
     <Folder Include="Data\" />
+    <Folder Include="Providers\" />
   </ItemGroup>
 </Project>
