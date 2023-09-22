@@ -1,0 +1,72 @@
+﻿@page "/authors/create"
+
+@inject IAuthorService authors
+@inject NavigationManager navigation
+
+@attribute [Authorize(Roles = Roles.Administrator)]
+
+<h3>Create New Author</h3>
+
+@if (!string.IsNullOrEmpty(message))
+{
+    <div class="alert alert-danger">
+        <p>@message</p>
+    </div>
+}
+
+<div class="card-body">
+    <EditForm Model="CreateAuthorModel" OnValidSubmit="HandleCreateAuthor">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <br />
+        <div class="form-group">
+            <label for="email">First Name</label>
+            <InputText class="form-control" @bind-Value="CreateAuthorModel.FirstName" />
+            <ValidationMessage For="@(() => CreateAuthorModel.FirstName)" />
+        </div>
+        <br />
+        <div class="form-group">
+            <label for="email">Last Name</label>
+            <InputText class="form-control" @bind-Value="CreateAuthorModel.LastName" />
+            <ValidationMessage For="@(() => CreateAuthorModel.LastName)" />
+        </div>
+        <br />
+        <div class="form-group">
+            <label for="email">Bio</label>
+            <InputTextArea class="form-control" @bind-Value="CreateAuthorModel.Bio" />
+            <ValidationMessage For="@(() => CreateAuthorModel.Bio)" />
+        </div>
+
+        <br />
+        <button type="submit" class="btn btn-primary btn-block">Create</button>
+        <button class="btn btn-outline-secondary btn-block" @onclick="NavigateToListPage"><span class="oi oi-media-skip-backward"></span> Back to List</button>
+    </EditForm>
+</div>
+
+@code {
+    private string message = string.Empty;
+    private AuthorCreateDto CreateAuthorModel = new AuthorCreateDto();
+
+    private async Task HandleCreateAuthor()
+    {
+        try
+        {
+            await authors.CreateAuthor(CreateAuthorModel);
+            NavigateToListPage();
+        }
+        catch (ApiException apiException)
+        {
+            if (apiException.StatusCode >= 200 && apiException.StatusCode <= 299)
+                NavigateToListPage();
+
+            message = apiException.Response;
+        }
+
+    }
+
+    private void NavigateToListPage()
+    {
+        navigation.NavigateTo("/authors/");
+    }
+}
+

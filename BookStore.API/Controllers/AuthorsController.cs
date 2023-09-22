@@ -1,4 +1,3 @@
-using System.Net;
 using AutoMapper;
 using BookStore.API.Data;
 using BookStore.API.Models.Authors;
@@ -42,7 +41,7 @@ public class AuthorsController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error performing GET {Method}", nameof(GetAuthors));
-            return StatusCode((int)HttpStatusCode.InternalServerError, Messages.Error500Client);
+            return StatusCode(StatusCodes.Status500InternalServerError, Messages.Error500Client);
         }
     }
 
@@ -69,7 +68,7 @@ public class AuthorsController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogError(ex, $"Error performing: GET {nameof(GetAuthor)}");
-            return StatusCode((int)HttpStatusCode.InternalServerError, Messages.Error500Client);
+            return StatusCode(StatusCodes.Status500InternalServerError, Messages.Error500Client);
         }
     }
 
@@ -77,6 +76,7 @@ public class AuthorsController : ControllerBase
     // To protect from over posting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
     [Authorize(Roles = "Administrator")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> PutAuthor(int id, AuthorUpdateDto authorDto)
     {
         try
@@ -111,7 +111,7 @@ public class AuthorsController : ControllerBase
                 else
                 {
                     _logger.LogError(ex, "Concurrency error: PUT {Method}(id: {Id})", nameof(PutAuthor), id);
-                    return StatusCode((int)HttpStatusCode.InternalServerError, Messages.Error500Client);
+                    return StatusCode(StatusCodes.Status500InternalServerError, Messages.Error500Client);
                 }
             }
 
@@ -120,7 +120,7 @@ public class AuthorsController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error performing PUT {Method}", nameof(PutAuthor));
-            return StatusCode((int)HttpStatusCode.InternalServerError, Messages.Error500Client);
+            return StatusCode(StatusCodes.Status500InternalServerError, Messages.Error500Client);
         }
     }
 
@@ -128,6 +128,7 @@ public class AuthorsController : ControllerBase
     // To protect from over posting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
     [Authorize(Roles = "Administrator")]
+    [ProducesResponseType(typeof(AuthorCreateDto), StatusCodes.Status201Created)]
     public async Task<ActionResult<AuthorCreateDto>> PostAuthor(AuthorCreateDto authorDto)
     {
         try
@@ -145,13 +146,14 @@ public class AuthorsController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogError(ex, $"Error performing: POST {nameof(PostAuthor)}");
-            return StatusCode((int)HttpStatusCode.InternalServerError, Messages.Error500Client);
+            return StatusCode(StatusCodes.Status500InternalServerError, Messages.Error500Client);
         }
     }
 
     // DELETE: api/Authors/5
     [HttpDelete("{id}")]
     [Authorize(Roles = "Administrator")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> DeleteAuthor(int id)
     {
         try
@@ -175,7 +177,7 @@ public class AuthorsController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error performing: DELETE {Method}", nameof(DeleteAuthor));
-            return StatusCode((int)HttpStatusCode.InternalServerError, Messages.Error500Client);
+            return StatusCode(StatusCodes.Status500InternalServerError, Messages.Error500Client);
         }
     }
 

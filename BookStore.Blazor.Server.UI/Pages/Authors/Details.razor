@@ -1,0 +1,71 @@
+﻿@page "/authors/details/{id:int}"
+
+@inject IAuthorService authors
+@inject NavigationManager navigation
+
+<h3>Author Details</h3>
+
+@if (!string.IsNullOrEmpty(message))
+    {
+        <div class="alert alert-danger">
+            <p>@message</p>
+        </div>
+    }
+
+<div class="card-body">
+    <EditForm Model="AuthorDetailsModel" Context="author_edit">
+        <fieldset disabled="disabled">
+            <div class="form-group">
+                <label for="email">First Name</label>
+                <InputText class="form-control" @bind-Value="AuthorDetailsModel.FirstName" />
+                <ValidationMessage For="@(() => AuthorDetailsModel.FirstName)" />
+            </div>
+            <br />
+            <div class="form-group">
+                <label for="email">Last Name</label>
+                <InputText class="form-control" @bind-Value="AuthorDetailsModel.LastName" />
+                <ValidationMessage For="@(() => AuthorDetailsModel.LastName)" />
+            </div>
+            <br />
+            <div class="form-group">
+                <label for="email">Bio</label>
+                <InputTextArea class="form-control" @bind-Value="AuthorDetailsModel.Bio" />
+                <ValidationMessage For="@(() => AuthorDetailsModel.Bio)" />
+            </div>
+
+            <br />
+        </fieldset>
+        <AuthorizeView Roles="@Roles.Administrator">
+            <button class="btn btn-warning btn-block" @onclick="GoToEdit"><span class="oi oi-pencil"></span> Edit Author</button>
+        </AuthorizeView>
+        <button class="btn btn-outline-secondary btn-block" @onclick="NavigateToListPage"><span class="oi oi-media-skip-backward"></span> Back to List</button>
+    </EditForm>
+</div>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private string message = string.Empty;
+    private AuthorDto AuthorDetailsModel = new AuthorDto();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await authors.GetAuthor(Id);
+        if (response.Success)
+        {
+            AuthorDetailsModel = response.Data;
+        }
+    }
+
+    private void NavigateToListPage()
+    {
+        navigation.NavigateTo("/authors/");
+    }
+
+    private void GoToEdit()
+    {
+        navigation.NavigateTo($"/authors/edit/{Id}");
+    }
+}
+

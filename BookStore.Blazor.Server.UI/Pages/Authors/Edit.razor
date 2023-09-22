@@ -1,0 +1,83 @@
+﻿@page "/authors/edit/{id:int}"
+
+@inject IAuthorService authors
+@inject NavigationManager navigation
+
+@attribute [Authorize(Roles = Roles.Administrator)]
+
+<h3>Edit Author</h3>
+
+@if (!string.IsNullOrEmpty(message))
+{
+    <div class="alert alert-danger">
+        <p>@message</p>
+    </div>
+}
+
+<div class="card-body">
+    <EditForm Model="EditAuthorModel" OnValidSubmit="HandleEditAuthor">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <br />
+        <div class="form-group">
+            <label for="email">First Name</label>
+            <InputText class="form-control" @bind-Value="EditAuthorModel.FirstName" />
+            <ValidationMessage For="@(() => EditAuthorModel.FirstName)" />
+        </div>
+        <br />
+        <div class="form-group">
+            <label for="email">Last Name</label>
+            <InputText class="form-control" @bind-Value="EditAuthorModel.LastName" />
+            <ValidationMessage For="@(() => EditAuthorModel.LastName)" />
+        </div>
+        <br />
+        <div class="form-group">
+            <label for="email">Bio</label>
+            <InputTextArea class="form-control" @bind-Value="EditAuthorModel.Bio" />
+            <ValidationMessage For="@(() => EditAuthorModel.Bio)" />
+        </div>
+
+        <br />
+        <button type="submit" class="btn btn-primary btn-block">Update</button>
+        <button class="btn btn-outline-secondary btn-block" @onclick="NavigateToListPage"><span class="oi oi-media-skip-backward"></span> Back to List</button>
+    </EditForm>
+</div>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private string message = string.Empty;
+    private AuthorUpdateDto EditAuthorModel = new AuthorUpdateDto();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await authors.GetAuthorForUpdate(Id);
+        if (response.Success)
+        {
+            EditAuthorModel = response.Data;
+        }
+    }
+
+    private async Task HandleEditAuthor()
+    {
+        try
+        {
+            await authors.EditAuthor(Id, EditAuthorModel);
+            NavigateToListPage();
+        }
+        catch (ApiException apiException)
+        {
+            if (apiException.StatusCode >= 200 && apiException.StatusCode <= 299)
+                NavigateToListPage();
+
+            message = apiException.Response;
+        }
+
+    }
+
+    private void NavigateToListPage()
+    {
+        navigation.NavigateTo("/authors/");
+    }
+}
